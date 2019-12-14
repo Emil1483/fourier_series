@@ -1,19 +1,15 @@
 MagicVector magicVector;
 
-float timeStep = 0.0005;
+float timeStep = 0.0025;
 ArrayList<PVector> path;
 ArrayList<PVector> result;
 float lenMult;
 int feathering = 100;
 int showChildren = 1;
-int children = 4000; //Must be even
+int children = 400; //Must be even
 
 void setup() {
-  size(1000, 920, P2D);
-  
-  lenMult = 1476;
-  
-  result = new ArrayList<PVector>();
+  fullScreen(P2D);
   
   path = new ArrayList<PVector>();
   JSONObject json = loadJSONObject("data/tobias.json");
@@ -24,12 +20,16 @@ void setup() {
     index ++;
   }
   
+  lenMult = 1180.0;
+  
   magicVector = new MagicVector(new PVector(0, 0), 0);
   for (int i = 0; i < children / 2; i += 1) {
     magicVector.addChild(new MagicVector(c_n(i), i));
     if (i == 0) continue;
     magicVector.addChild(new MagicVector(c_n(-i), -i));
   }
+  
+  result = new ArrayList<PVector>();
 }
 
 PVector c_n(int n) {
@@ -48,7 +48,9 @@ PVector c_n(int n) {
 
 PVector f_t(float t) {
   int index = floor(t * path.size());
-  return path.get(index).copy();
+  PVector result = path.get(index).copy();
+  result.mult(lenMult);
+  return result;
 }
 
 void draw() {
@@ -76,7 +78,7 @@ void draw() {
     
     stroke(map(mult, 0, 1, 122, 255));
     strokeWeight(map(min(mult, 1), 0, 1, 0.5, 3));
-    line(p1.x * lenMult, p1.y * lenMult, p2.x * lenMult, p2.y * lenMult);
+    line(p1.x, p1.y, p2.x, p2.y);
   }
   magicVector.show(new PVector(0, 0), 0);
 }

@@ -39,8 +39,8 @@ class MagicVector {
     
     PVector showPos = pos.copy();
     PVector showC = c.copy();
-    showPos.mult(lenMult);
-    showC.mult(lenMult);
+    //showPos.mult(lenMult);
+    //showC.mult(lenMult);
     
     stroke(255);
     strokeWeight(1);
