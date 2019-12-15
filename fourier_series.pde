@@ -94,8 +94,8 @@ void draw() {
     int lenBeforeFeathering = maxResultSize - feathering;
     float mult = map(dist, lenBeforeFeathering, lenBeforeFeathering + feathering, 1, 0);
 
-    stroke(lines, map(mult, 0, 1, 70, 255));
-    strokeWeight(map(min(mult, 1), 0, 1, 0.2, 2));
+    stroke(lines, map(mult, 0, 1, 90, 255));
+    strokeWeight(map(min(mult, 1), 0, 1, 0.3, 2));
     line(p1.x, p1.y, p2.x, p2.y);
   }
 }
