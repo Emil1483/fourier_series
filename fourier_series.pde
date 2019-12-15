@@ -16,7 +16,7 @@ color lines = color(254, 231, 21);
 
 void setup() {
   fullScreen(P2D);
-  
+
   path = new ArrayList<PVector>();
   JSONObject json = loadJSONObject("data/tobias.json");
   int index = 0;
@@ -25,7 +25,7 @@ void setup() {
     path.add(new PVector(posJson.getFloat("x"), posJson.getFloat("y")));
     index ++;
   }
-  
+
   PVector avgPos = new PVector();
   float dt = 1.0 / path.size();
   for (PVector pos : path) {
@@ -34,14 +34,14 @@ void setup() {
     avgPos.add(p);
   }
   offset = new PVector(width/2 - avgPos.x * lenMult, height/2 - avgPos.y * lenMult);
-  
+
   magicVector = new MagicVector(new PVector(0, 0), 0);
   for (int i = 0; i < children / 2 + 5; i += 1) {
     magicVector.addChild(new MagicVector(c_n(i), i));
     if (i == 0) continue;
     magicVector.addChild(new MagicVector(c_n(-i), -i));
   }
-  
+
   result = new ArrayList<PVector>();
 }
 
@@ -67,33 +67,33 @@ PVector f_t(float t) {
 
 void draw() {
   background(canvas);
-  
+
   fill(lines);
   textSize(70);
   text(showChildren, 30, height - 30);
-  
+
   int maxResultSize = round(1.0 / timeStep);
-  
+
   magicVector.update();
   PVector bottom = magicVector.getBottomPos(new PVector(0, 0), 0);
   result.add(bottom);
   while (result.size() > maxResultSize) {
     result.remove(0);
   }
-  
+
   if (!follow) translate(offset.x, offset.y);
   if (follow) translate(width / 2 - bottom.x, height / 2 - bottom.y);
-  
+
   magicVector.show(new PVector(0, 0), 0);
-  
+
   for (int i = 0; i < result.size() - 1; i++) {
     PVector p1 = result.get(i);
     PVector p2 = result.get(i + 1);
-    
+
     int dist = result.size() - i;
     int lenBeforeFeathering = maxResultSize - feathering;
     float mult = map(dist, lenBeforeFeathering, lenBeforeFeathering + feathering, 1, 0);
-    
+
     stroke(lines, map(mult, 0, 1, 70, 255));
     strokeWeight(map(min(mult, 1), 0, 1, 0.2, 2));
     line(p1.x, p1.y, p2.x, p2.y);
@@ -143,10 +143,12 @@ void keyPressed() {
   }
   try {
     showChildren += int(key + "");
-  } finally {
-    if (key == ' ') showChildren += 20;
+  } 
+  finally {
+    if (key == 'n') showChildren += 20;
     else if (key == 'm') showChildren += 100;
-    else if (key == 'n') showChildren -= 20;
+    else if (key == 'b') showChildren -= 20;
+    else if (key == 'v') showChildren -= 100;
   }
   if (showChildren > children) showChildren = children;
   if (showChildren < 1) showChildren = 1;
