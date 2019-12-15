@@ -7,7 +7,7 @@ float firstLenMult = 1279;
 float lenMult = firstLenMult;
 int feathering = 250;
 int showChildren = 1;
-int children = 3500; //Must be even
+int children = 4000; //Must be even
 PVector offset;
 boolean follow = false;
 
@@ -36,7 +36,7 @@ void setup() {
   offset = new PVector(width/2 - avgPos.x * lenMult, height/2 - avgPos.y * lenMult);
   
   magicVector = new MagicVector(new PVector(0, 0), 0);
-  for (int i = 0; i < children / 2; i += 1) {
+  for (int i = 0; i < children / 2 + 5; i += 1) {
     magicVector.addChild(new MagicVector(c_n(i), i));
     if (i == 0) continue;
     magicVector.addChild(new MagicVector(c_n(-i), -i));
@@ -121,7 +121,7 @@ void keyPressed() {
   }
   if (key == '+') {
     if (!follow) return;
-    if (lenMult * 1.5 >= 52856) return;
+    if (lenMult * 1.5 >= 50856) return;
     lenMult *= 1.5;
     multResult(1.5);
     return;
@@ -145,7 +145,7 @@ void keyPressed() {
     showChildren += int(key + "");
   } finally {
     if (key == ' ') showChildren += 20;
-    else if (key == 'm') showChildren += 50;
+    else if (key == 'm') showChildren += 100;
     else if (key == 'n') showChildren -= 20;
   }
   if (showChildren > children) showChildren = children;
