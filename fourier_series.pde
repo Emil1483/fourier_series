@@ -7,7 +7,7 @@ float firstLenMult = 1279;
 float lenMult = firstLenMult;
 int feathering = 250;
 int showChildren = 1;
-int children = 4000; //Must be even
+int children = 600; //Must be even
 PVector offset;
 boolean follow = false;
 
