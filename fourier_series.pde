@@ -7,7 +7,7 @@ float firstLenMult = 1279;
 float lenMult = firstLenMult;
 int feathering = 250;
 int showChildren = 1;
-int children = 4000; //Must be even
+int children = 3500; //Must be even
 PVector offset;
 boolean follow = false;
 
@@ -107,6 +107,10 @@ void multResult(float m) {
 }
 
 void keyPressed() {
+  if (key == 'c') {
+    result.clear();
+    return;
+  }
   if (key == 'f') {
     follow = !follow;
     if (!follow) {
@@ -141,6 +145,7 @@ void keyPressed() {
     showChildren += int(key + "");
   } finally {
     if (key == ' ') showChildren += 20;
+    else if (key == 'm') showChildren += 50;
     else if (key == 'n') showChildren -= 20;
   }
   if (showChildren > children) showChildren = children;
