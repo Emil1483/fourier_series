@@ -89,6 +89,13 @@ void draw() {
   for (int i = 0; i < result.size() - 1; i++) {
     PVector p1 = result.get(i);
     PVector p2 = result.get(i + 1);
+    
+    if (follow) {
+      if (p1.x - bottom.x > width / 2 && p2.x - bottom.x > width / 2) continue;
+      if (p1.x + width / 2 - bottom.x < 0 && p2.x + width / 2 - bottom.x < 0) continue;
+      if (p1.y - bottom.y > height / 2 && p2.y - bottom.y > height / 2) continue;
+      if (p1.y + height / 2 - bottom.y < 0 && p2.y + height / 2 - bottom.y < 0) continue;
+    }
 
     int dist = result.size() - i;
     int lenBeforeFeathering = maxResultSize - feathering;
