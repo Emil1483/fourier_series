@@ -3,7 +3,7 @@ MagicVector magicVector;
 float timeStep = 0.0005;
 ArrayList<PVector> path;
 ArrayList<PVector> result;
-float firstLenMult = 1279;
+float firstLenMult = 1000;
 float lenMult = firstLenMult;
 int feathering = 250;
 int showChildren = 1;
@@ -18,12 +18,11 @@ void setup() {
   fullScreen(P2D);
   
   path = new ArrayList<PVector>();
-  JSONObject json = loadJSONObject("data/tobias.json");
-  int index = 0;
-  while (!json.isNull(index + "")) {
-    JSONObject posJson = json.getJSONObject(index + "");
+  JSONArray json = loadJSONArray("data/note.json");
+  
+  for (int i = 0; i < json.size(); i++) {
+    JSONObject posJson = json.getJSONObject(i);
     path.add(new PVector(posJson.getFloat("x"), posJson.getFloat("y")));
-    index ++;
   }
   
   PVector avgPos = new PVector();
@@ -60,9 +59,17 @@ PVector c_n(int n) {
 }
 
 PVector f_t(float t) {
-  int index = floor(t * path.size());
-  PVector result = path.get(index).copy();
-  return result;
+  int index0 = floor(t * path.size());
+  int index1 = ceil(t * path.size());
+  if (index1 >= path.size()) index1 = 0;
+  float a = t * path.size() - index0;
+  
+  PVector point0 = path.get(index0).copy();
+  
+  PVector point1 = path.get(index1).copy();
+  point0.lerp(point1, a);
+  
+  return point0;
 }
 
 void draw() {
